@@ -1,0 +1,435 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Biljart API",
+    "description": "API for the Libre Billiards competition at De Club met Stootkracht",
+    "contact": {
+      "email": "info@chemistry.software"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/chemistry.software/biljart-api/1.0.0",
+      "description": "SwaggerHub API Auto Mocking"
+    }
+  ],
+  "tags": [
+    {
+      "name": "admins",
+      "description": "Secured Admin-only calls"
+    },
+    {
+      "name": "players",
+      "description": "Operations available to regular players"
+    }
+  ],
+  "paths": {
+    "/clubs": {
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Get all clubs",
+        "responses": {
+          "200": {
+            "description": "A list of clubs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Club"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "admins"
+        ],
+        "summary": "Create a new club",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Club"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Club"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clubs/{club_id}": {
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Get a specific club by ID",
+        "parameters": [
+          {
+            "name": "club_id",
+            "in": "path",
+            "description": "ID of the club to retrieve",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A club object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Club"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Club not found"
+          }
+        }
+      }
+    },
+    "/clubs/{club_id}/members": {
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Get all members of a club",
+        "parameters": [
+          {
+            "name": "club_id",
+            "in": "path",
+            "description": "ID of the club to retrieve members from",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of club members",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Player"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Club not found"
+          }
+        }
+      }
+    },
+    "/clubs/{club_id}/competitions": {
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Get all competitions of a club",
+        "parameters": [
+          {
+            "name": "club_id",
+            "in": "path",
+            "description": "ID of the club to retrieve competitions from",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of competitions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Competition"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Club not found"
+          }
+        }
+      }
+    },
+    "/clubs/{club_id}/competitions/{competition_id}/games": {
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Get all games of a competition",
+        "parameters": [
+          {
+            "name": "club_id",
+            "in": "path",
+            "description": "ID of the club",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "competition_id",
+            "in": "path",
+            "description": "ID of the competition",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of games",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Game"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Club or competition not found"
+          }
+        }
+      }
+    },
+    "/games/{game_id}": {
+      "get": {
+        "tags": [
+          "players"
+        ],
+        "summary": "Get a specific game by ID",
+        "parameters": [
+          {
+            "name": "game_id",
+            "in": "path",
+            "description": "ID of the game to retrieve",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A game object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Game"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Game not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Club": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the club"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the club"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Player"
+            }
+          },
+          "competitions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Competition"
+            }
+          },
+          "ongoing": {
+            "type": "boolean",
+            "description": "Indicates if the club is currently active"
+          },
+          "start_date": {
+            "type": "string",
+            "description": "The start date of the club's activity",
+            "format": "date"
+          },
+          "end_date": {
+            "type": "string",
+            "description": "The end date of the club's activity",
+            "format": "date"
+          }
+        }
+      },
+      "Player": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the player"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the player"
+          },
+          "moyenne": {
+            "type": "number",
+            "description": "The player's moyenne (average points per turn)"
+          },
+          "competitions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Competition"
+            }
+          }
+        }
+      },
+      "Competition": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the competition"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the competition"
+          },
+          "club_id": {
+            "type": "string",
+            "description": "The ID of the club hosting the competition"
+          },
+          "start_date": {
+            "type": "string",
+            "description": "The start date of the competition",
+            "format": "date"
+          },
+          "end_date": {
+            "type": "string",
+            "description": "The end date of the competition",
+            "format": "date"
+          },
+          "games": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Game"
+            }
+          }
+        }
+      },
+      "Game": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the game"
+          },
+          "competition_id": {
+            "type": "string",
+            "description": "The ID of the competition the game belongs to"
+          },
+          "player1_id": {
+            "type": "string",
+            "description": "The ID of the first player"
+          },
+          "player2_id": {
+            "type": "string",
+            "description": "The ID of the second player"
+          },
+          "date_played": {
+            "type": "string",
+            "description": "The date and time when the game was played",
+            "format": "date-time"
+          },
+          "ongoing": {
+            "type": "boolean",
+            "description": "Indicates if the game is currently ongoing"
+          },
+          "outcome": {
+            "type": "string",
+            "description": "The outcome of the game",
+            "enum": [
+              "win",
+              "lose",
+              "draw",
+              "maximum_turns"
+            ]
+          },
+          "points_player1": {
+            "type": "integer",
+            "description": "Points scored by player 1 in the game"
+          },
+          "points_player2": {
+            "type": "integer",
+            "description": "Points scored by player 2 in the game"
+          },
+          "turns": {
+            "type": "integer",
+            "description": "The amount of turns taken"
+          }
+        }
+      }
+    }
+  }
+}
