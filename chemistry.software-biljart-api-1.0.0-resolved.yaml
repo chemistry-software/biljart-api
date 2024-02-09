@@ -278,6 +278,7 @@ components:
           - lose
           - draw
           - maximum_turns
+          - ongoing
         points_player1:
           type: integer
           description: Points scored by player 1 in the game

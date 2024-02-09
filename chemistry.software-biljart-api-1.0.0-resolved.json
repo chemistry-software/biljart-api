@@ -413,7 +413,8 @@
               "win",
               "lose",
               "draw",
-              "maximum_turns"
+              "maximum_turns",
+              "ongoing"
             ]
           },
           "points_player1": {

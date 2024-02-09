@@ -366,7 +366,7 @@
           },
           "outcome" : {
             "type" : "string",
-            "enum" : [ "win", "lose", "draw", "maximum_turns" ],
+            "enum" : [ "win", "lose", "draw", "maximum_turns", "ongoing" ],
             "description" : "The outcome of the game"
           },
           "points_player1" : {
